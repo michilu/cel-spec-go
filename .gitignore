@@ -1,0 +1,6 @@
+/cel-spec-go
+
+*.h
+*.so
+/vendor
+go.sum
