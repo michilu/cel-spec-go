@@ -16,17 +16,17 @@ build:
   - script:
       name: go module
       code: |
-        ( type go1.11rc1 > /dev/null 2>&1 ) || go get golang.org/dl/go1.11rc1 && go1.11rc1 download
+        ( type go1.11rc2 > /dev/null 2>&1 ) || go get golang.org/dl/go1.11rc2 && go1.11rc2 download
   - script:
       name: version
       code: |
-        go1.11rc1 version
+        go1.11rc2 version
   - script:
       name: build
       code: |
         make
         ./cel-spec-go version
-        go1.11rc1 build
+        go1.11rc2 build
         ./cel-spec-go version
   - script:
       name: test

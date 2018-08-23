@@ -4,8 +4,8 @@ AUTO_COUNT_LOG:=$(shell git log --since=midnight --oneline|wc -l|tr -d " ")
 COMMIT:=4b825dc
 REVIEWDOG:=| reviewdog -efm='%f:%l:%c: %m' -diff="git diff $(COMMIT) HEAD"
 
-GOBIN:=go1.11rc1
-VGOBIN:=GO111MODULE=on go1.11rc1
+GOBIN:=go1.11rc2
+VGOBIN:=GO111MODULE=on go1.11rc2
 PKG:=$(shell $(GOBIN) list)
 NAME:=$(notdir $(PKG))
 GOLIST:=$(shell $(GOBIN) list ./...)
