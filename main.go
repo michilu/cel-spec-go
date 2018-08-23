@@ -5,8 +5,8 @@ import (
 
 	"github.com/michilu/boilerplate/v/cmd"
 
-	"github.com/michilu/cel-spec-go/cmd/echo"
 	"github.com/michilu/boilerplate/cmd/version"
+	"github.com/michilu/cel-spec-go/cmd/gen"
 )
 
 const (
@@ -16,7 +16,7 @@ const (
 
 var (
 	ns = []func() (*cobra.Command, error){
-		echo.New,
+		gen.New,
 		version.New,
 	}
 )

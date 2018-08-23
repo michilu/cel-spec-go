@@ -32,6 +32,8 @@ build:
       name: test
       code: |
         make test
+        ./cel-spec-go gen
+        ./cel-spec-go gen
   #after-steps:
   #- slack-notifier:
   #    url: $SLACK_URL

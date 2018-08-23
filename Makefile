@@ -4,7 +4,7 @@ AUTO_COUNT_LOG:=$(shell git log --since=midnight --oneline|wc -l|tr -d " ")
 COMMIT:=4b825dc
 REVIEWDOG:=| reviewdog -efm='%f:%l:%c: %m' -diff="git diff $(COMMIT) HEAD"
 
-GOBIN=go1.11rc1
+GOBIN:=go1.11rc1
 VGOBIN:=GO111MODULE=on go1.11rc1
 PKG:=$(shell $(GOBIN) list)
 NAME:=$(notdir $(PKG))
@@ -21,7 +21,7 @@ VENDOR:=vendor
 	$(GOBIN) build -buildmode=c-shared -o $@ $<
 
 all: $(VENDOR) $(GO) $(LIB)
-	$(GOBIN) build -ldflags=" \
+	$(VGOBIN) build -ldflags=" \
 -X main.serial=$(AUTO_COUNT_SINCE).$(AUTO_COUNT_LOG) \
 -X main.hash=$(shell git describe --always --dirty=+) \
 -X \"main.build=$(shell LANG=en date -u +'%b %d %T %Y')\" \
@@ -35,7 +35,12 @@ clean:
 	rm -rf vendor
 
 test: $(VENDOR)
-	$(GOBIN) test
+	$(GOBIN) test $(PKG)/...
+
+.PHONY: bench
+bench:
+	$(GOBIN) test -bench . -benchmem -count 5 -run none $(PKG)/... | tee bench/now.txt
+	[ -f bench/before.txt ] && ( type benchcmp > /dev/null 2>&1 ) && benchcmp bench/before.txt bench/now.txt || :
 
 lint: $(VENDOR)
 	-echo $(GOLIST) | xargs -L1 golint
